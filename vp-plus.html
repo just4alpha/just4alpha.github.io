@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成交量分布 (高级版)</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<!-- Auth Modal -->
+<div id="auth-modal">
+    <div class="auth-box">
+        <h3>🔒 高级版访问</h3>
+        <p>请输入邀请码以使用全部功能</p>
+        <input type="password" id="auth-code" placeholder="邀请码">
+        <button onclick="authenticate()">验证并进入</button>
+        <p class="error-msg" id="auth-error">邀请码错误</p>
+        <p style="font-size: 12px; margin-top: 20px;">没有邀请码？<a href="vp-demo.html">体验免费版</a></p>
+    </div>
+</div>
+
+<!-- Sidebar Container -->
+<div id="sidebar-container"></div>
+
+<!-- Main Content -->
+<div class="main-content vp-mode">
+    <header>
+        <div style="display: flex; align-items: center;">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <div class="page-title" style="margin-left: 15px;">成交量分布 (高级版)</div>
+        </div>
+    </header>
+
+    <div class="controls-bar">
+        <label for="data-selector"><strong>自选股列表:</strong></label>
+        <select id="data-selector">
+        </select>
+        <label for="vpMode"><strong>分布图模式:</strong></label>
+        <select id="vpMode">
+        </select>
+        <button id="toggleVolume" class="active">成交量</button>
+    </div>
+
+    <div id="chart-container">
+        <div id="loading" class="loading-msg">正在加载...</div>
+    </div>
+</div>
+
+<!-- Floating QR Code -->
+<div class="floating-qr">
+    <img src="docs/qrcode.png" alt="公众号二维码">
+</div>
+
+<script src="layout.js"></script>
+<script type="module">
+    import { initializeController, setupUI, initChart, loadData, getLevelState, controller } from './vp.min.js';
+
+    function enterApp(state, code) {
+        sessionStorage.setItem('auth_code', code);
+        setupUI(state);
+        document.getElementById('auth-modal').style.display = 'none';
+        initChart();
+        loadData();
+    }
+
+    async function main() {
+        await initializeController();
+        const storedCode = sessionStorage.getItem('auth_code');
+        const validState = getLevelState(storedCode);
+
+        if (validState) {
+            enterApp(validState, storedCode);
+        } else {
+            sessionStorage.removeItem('auth_code');
+            document.getElementById('auth-modal').style.display = 'flex';
+        }
+    }
+
+    window.authenticate = async function() {
+        const code = document.getElementById('auth-code').value;
+        const errorEl = document.getElementById('auth-error');
+        const validState = getLevelState(code);
+
+        if (validState) {
+            enterApp(validState, code);
+        } else {
+            if (code === "GUEST") {
+                errorEl.innerText = "该邀请码仅限体验版使用";
+            } else {
+                errorEl.innerText = "邀请码无效或权限不足";
+            }
+            errorEl.style.display = 'block';
+            sessionStorage.removeItem('auth_code');
+        }
+    };
+
+    main();
+
+</script>
+
+</body>
+</html>

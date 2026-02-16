@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成交量分布 (体验版)</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<!-- Sidebar Container -->
+<div id="sidebar-container"></div>
+
+<!-- Main Content -->
+<div class="main-content vp-mode">
+    <header>
+        <div style="display: flex; align-items: center; width: 100%;">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <div class="page-title" style="margin-left: 15px;">成交量分布分析(体验版)</div>
+            <button class="upgrade-button" onclick="window.location.href='vp-plus.html'">🚀 升级到高级版</button>
+        </div>
+    </header>
+
+    <div class="controls-bar">
+        <label for="data-selector"><strong>自选股列表:</strong></label>
+        <select id="data-selector">
+        </select>
+        <label for="vpMode"><strong>分布图模式:</strong></label>
+        <select id="vpMode">
+        </select>
+        <button id="toggleVolume" class="active">成交量</button>
+    </div>
+
+    <div id="chart-container">
+        <div id="loading" class="loading-msg">正在加载...</div>
+    </div>
+</div>
+
+<!-- Floating QR Code -->
+<div class="floating-qr">
+    <img src="docs/qrcode.png" alt="公众号二维码">
+</div>
+
+<script src="layout.js"></script>
+<script type="module">
+    import { initializeController, setupUI, initChart, loadData, controller } from './vp.min.js';
+
+    async function main() {
+        await initializeController();
+        let user_state = controller.verify_code("GUEST");
+        setupUI(user_state);
+        runApp();
+    }
+
+    function runApp() {
+        initChart();
+        loadData();
+    }
+
+    main();
+
+</script>
+
+</body>
+</html>
