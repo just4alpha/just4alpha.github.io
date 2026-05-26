@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛市评分分析</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="main.css?v=20260526-bull-market">
+</head>
+<body>
+
+<!-- Sidebar Container -->
+<div id="sidebar-container"></div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <header>
+        <div class="page-title-row">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <div class="page-title page-title-offset">牛市评分分析</div>
+        </div>
+        <div class="update-time">更新于: <span id="update-time">--</span></div>
+    </header>
+
+    <div class="container">
+        <div class="section-title">牛市概率评分</div>
+        <div class="score-stack">
+            <div class="card">
+                <div class="card-header">当前评分</div>
+                <div class="card-body score-card-body">
+                    <div class="score-number">70.4<span class="score-unit"> / 100</span></div>
+                    <div class="score-status">牛市早中期概率上升</div>
+                    <p class="score-note">这个分数不是牛市确认书，而是用五层数据框架持续观察市场是否正在从冷态进入修复和扩散阶段。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">评分拆解</div>
+                <div class="card-body">
+                    <table class="score-table">
+                        <thead>
+                            <tr>
+                                <th>模块</th>
+                                <th>权重</th>
+                                <th>得分</th>
+                                <th>核心证据</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>全球 AI 重估</td>
+                                <td>20</td>
+                                <td>20.0</td>
+                                <td>2023以来AI受益市场平均涨幅约 156.6%，中证500约 44.0%。</td>
+                            </tr>
+                            <tr>
+                                <td>国内宏观修复</td>
+                                <td>20</td>
+                                <td>17.0</td>
+                                <td>2026-04-01 CPI 1.2%，PPI 2.8%，PMI 50.3，M1-M2 -3.6pct。</td>
+                            </tr>
+                            <tr>
+                                <td>流动性活化</td>
+                                <td>20</td>
+                                <td>14.3</td>
+                                <td>2026-05-21 近20日融资买入额/成交金额约 22.53%，疫情前均值 17.93%。</td>
+                            </tr>
+                            <tr>
+                                <td>市场宽度扩散</td>
+                                <td>20</td>
+                                <td>4.5</td>
+                                <td>2026-05-22 中证800 MA20宽度约 29%，60日创新高 17 只。</td>
+                            </tr>
+                            <tr>
+                                <td>估值与情绪空间</td>
+                                <td>20</td>
+                                <td>14.6</td>
+                                <td>2026-05-22 10年国债 1.75%，沪深300股债收益差 5.14，中证500 1.70。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="anchor-grid">
+            <a href="#global-ai">全球 AI</a>
+            <a href="#macro">宏观修复</a>
+            <a href="#liquidity">流动性</a>
+            <a href="#breadth">市场宽度</a>
+            <a href="#valuation">估值空间</a>
+        </div>
+
+        <div class="grid">
+            <div class="card full-width">
+                <div class="card-header">牛市概率评分图</div>
+                <p class="chart-note">五个模块各占 20 分。单次评分不重要，连续变化才重要。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/bull_market_score.png" alt="牛市概率评分图" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" id="global-ai">第一层：全球 AI 重估坐标系</div>
+        <div class="grid">
+            <div class="card full-width">
+                <div class="card-header">全球主要股指 2023-2025 累计涨跌幅</div>
+                <p class="chart-note">用同一起点观察不同市场的走势差异，重点看 AI 受益市场是否持续向右上方拉开差距，以及中国资产是否仍处在相对低位。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/global_ai_curve.png" alt="全球主要股指 2023-2025 累计涨跌幅" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" id="macro">第二层：国内宏观修复</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">CPI 同比</div>
+                <p class="chart-note">低通胀说明居民端需求仍偏冷，温和回升比快速冲高更有利于牛市早期。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/macro_CPI同比.png" alt="CPI 同比" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">PPI 同比</div>
+                <p class="chart-note">PPI 从负值区间持续向零轴靠近，代表工业品价格和企业盈利压力开始缓解。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/macro_PPI同比.png" alt="PPI 同比" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">制造业 PMI</div>
+                <p class="chart-note">50 是荣枯线。连续站在 50 上方，比单月脉冲更有意义。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/macro_制造业PMI.png" alt="制造业 PMI" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">M1-M2 剪刀差</div>
+                <p class="chart-note">观察钱是继续沉淀，还是开始进入交易状态。剪刀差收窄并向上拐头通常更重要。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/macro_M1-M2剪刀差.png" alt="M1-M2 剪刀差" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" id="liquidity">第三层：流动性活化</div>
+        <div class="grid">
+            <div class="card full-width">
+                <div class="card-header">成交金额与融资强度</div>
+                <p class="chart-note">成交放大时融资强度同步抬升，说明风险偏好正在回来；如果只有成交放大而融资不跟，市场仍偏谨慎。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/liquidity_amount_and_ratios.png" alt="成交金额与融资强度" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" id="breadth">第四层：市场宽度扩散</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">中证800宽度仪表</div>
+                <p class="chart-note">指数上涨时，MA20 宽度是否维持在 50% 以上，60 日创新高比例是否同步抬升。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/breadth_dashboard_csi800.png" alt="中证800宽度仪表" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">沪深300宽度仪表</div>
+                <p class="chart-note">大盘权重上涨时，内部宽度是否跟得上；如果指数涨、宽度跌，就要警惕只是权重护盘。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/breadth_dashboard_csi300.png" alt="沪深300宽度仪表" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">中证500宽度仪表</div>
+                <p class="chart-note">中盘成长股是否扩散，尤其是指数突破时创新高比例有没有抬升。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/breadth_dashboard_csi500.png" alt="中证500宽度仪表" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title" id="valuation">第五层：估值与情绪空间</div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-header">中国10年期国债收益率与中证800走势</div>
+                <p class="chart-note">低利率配合指数上行，通常说明权益资产仍有比较优势。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/bond_yield_with_csi800.png" alt="中国10年期国债收益率与中证800走势" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">沪深300股债收益差与指数走势</div>
+                <p class="chart-note">指数上涨后股债收益差是否仍在高位；如果差值快速压缩，说明估值优势正在被上涨消耗。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/valuation_with_index_csi300.png" alt="沪深300股债收益差与指数走势" onclick="openLightbox(this)">
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">中证500股债收益差与指数走势</div>
+                <p class="chart-note">中盘股上涨后是否仍有估值补偿；如果指数没涨多少但股债收益差维持高位，修复空间仍值得观察。</p>
+                <div class="card-body">
+                    <img src="docs/bull_market/figures/valuation_with_index_csi500.png" alt="中证500股债收益差与指数走势" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>数据来源：自动化统计系统 | 仅供参考，不构成投资建议</p>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Greedy Alpha Report</p>
+    </footer>
+</div>
+
+<!-- Floating QR Code -->
+<div class="floating-qr">
+    <img src="docs/qrcode.webp" alt="公众号二维码">
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full Screen Image">
+</div>
+
+<script src="layout.min.js"></script>
+<script>
+    const now = new Date();
+    document.getElementById('update-time').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+    function openLightbox(imgElement) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        lightboxImg.src = imgElement.src.split('?')[0] + '?t=' + new Date().getTime();
+        lightbox.style.display = 'flex';
+        setTimeout(() => lightbox.classList.add('active'), 10);
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        setTimeout(() => {
+            lightbox.style.display = 'none';
+        }, 300);
+    }
+</script>
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "83857bd155524d76a3f1cea1fc16ddd3"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
