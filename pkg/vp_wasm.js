@@ -145,6 +145,9 @@ function __wbg_get_imports() {
             const ret = arg0.location;
             return ret;
         },
+        __wbg_log_f6bc668d2f87b2fd: function(arg0, arg1) {
+            console.log(getStringFromWasm0(arg0, arg1));
+        },
         __wbg_new_361308b2356cecd0: function() {
             const ret = new Object();
             return ret;
