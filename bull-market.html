@@ -33,8 +33,8 @@
             <div class="card">
                 <div class="card-header">当前评分</div>
                 <div class="card-body score-card-body">
-                    <div class="score-number">70.4<span class="score-unit"> / 100</span></div>
-                    <div class="score-status">牛市早中期概率上升</div>
+                    <div class="score-number"><span id="score-number">--</span><span class="score-unit"> / 100</span></div>
+                    <div class="score-status" id="score-status">等待评分数据</div>
                     <p class="score-note">这个分数不是牛市确认书，而是提醒我们：市场正在从过去几年的低温状态中重新定价。</p>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 <div class="card-body table-card-body">
                     <table class="score-table">
                         <thead><tr><th>模块</th><th>权重</th><th>得分</th><th>核心证据</th></tr></thead>
-                        <tbody>
+                        <tbody id="score-table-body">
                             <tr><td>全球 AI 重估</td><td>20</td><td>20.0</td><td>2023年以来截至2026-05-29，AI受益市场平均涨幅约 167.3%，中证500约 40.4%。</td></tr>
                             <tr><td>国内宏观修复</td><td>20</td><td>17.0</td><td>2026-04-01 CPI 1.2%，PPI 2.8%，PMI 50.3，M1-M2 -3.6pct。</td></tr>
                             <tr><td>流动性活化</td><td>20</td><td>14.2</td><td>2026-05-28 近20日融资买入额/成交金额约 22.33%，疫情前均值 17.93%。</td></tr>
@@ -175,6 +175,66 @@
 <script>
     const now = new Date();
     document.getElementById('update-time').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+    function parseCsvLine(line) {
+        const result = [];
+        let current = '';
+        let quoted = false;
+        for (let i = 0; i < line.length; i += 1) {
+            const char = line[i];
+            const next = line[i + 1];
+            if (char === '"' && quoted && next === '"') {
+                current += '"';
+                i += 1;
+            } else if (char === '"') {
+                quoted = !quoted;
+            } else if (char === ',' && !quoted) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current);
+        return result;
+    }
+
+    function parseCsv(text) {
+        const lines = text.trim().split(/\r?\n/).filter(Boolean);
+        if (lines.length < 2) return [];
+        const header = parseCsvLine(lines[0]);
+        return lines.slice(1).map(line => {
+            const values = parseCsvLine(line);
+            return Object.fromEntries(header.map((key, index) => [key, values[index] || '']));
+        });
+    }
+
+    function scoreStatus(score) {
+        if (score >= 80) return '牛市概率较高';
+        if (score >= 65) return '牛市早中期概率上升';
+        if (score >= 50) return '修复线索仍在验证';
+        return '牛市线索偏弱';
+    }
+
+    function loadBullMarketScore() {
+        fetch('docs/bull_market/bull_market_score.csv?t=' + Date.now())
+            .then(response => response.ok ? response.text() : Promise.reject(response.status))
+            .then(text => {
+                const rows = parseCsv(text);
+                if (!rows.length) return;
+                const total = rows.reduce((sum, row) => sum + Number(row.score || 0), 0);
+                document.getElementById('score-number').textContent = total.toFixed(1);
+                document.getElementById('score-status').textContent = scoreStatus(total);
+                document.getElementById('score-table-body').innerHTML = rows.map(row => (
+                    `<tr><td>${row.module}</td><td>${row.weight}</td><td>${Number(row.score || 0).toFixed(1)}</td><td>${row.evidence}</td></tr>`
+                )).join('');
+            })
+            .catch(() => {
+                document.getElementById('score-status').textContent = '评分数据暂不可用';
+            });
+    }
+
+    loadBullMarketScore();
 
     function openLightbox(imgElement) {
         const lightbox = document.getElementById('lightbox');
