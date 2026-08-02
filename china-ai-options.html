@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双创评分分析</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="main.css?v=20260731-china-ai-options">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<div class="main-content">
+    <header>
+        <div class="page-title-row">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <div class="page-title page-title-offset">双创评分分析</div>
+        </div>
+        <div class="update-time">更新于: <span id="update-time">--</span></div>
+    </header>
+
+    <div class="container report-container">
+        <section class="hero-copy">
+            <p>牛市评分回答的是大级别机会是否仍值得跟踪，双创评分回答的是：中国 AI 叙事是否仍适合通过创业板、科创50以及对应 ETF 期权来表达。</p>
+            <p>这里把文章中的五层逻辑压缩成一套量化仪表盘：先看叙事，再看价格结构，再看期权情绪、波动率定价，最后才回到交易执行空间。</p>
+        </section>
+
+        <div class="section-title">双创综合评分</div>
+        <div class="score-stack">
+            <div class="card">
+                <div class="card-header">当前评分</div>
+                <div class="card-body score-card-body">
+                    <div class="score-number"><span id="score-number">--</span><span class="score-unit"> / 100</span></div>
+                    <div class="score-status" id="score-status">等待评分数据</div>
+                    <p class="score-note">这个分数不是买入指令，而是把双创叙事、价格结构和期权定价放在同一张表里观察。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">评分拆解</div>
+                <div class="card-body table-card-body">
+                    <table class="score-table">
+                        <thead><tr><th>模块</th><th>权重</th><th>得分</th><th>核心证据</th></tr></thead>
+                        <tbody id="score-table-body">
+                            <tr><td colspan="4">等待评分数据</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="anchor-grid">
+            <a href="#narrative">叙事强度</a>
+            <a href="#structure">价格结构</a>
+            <a href="#pcr">期权情绪</a>
+            <a href="#volatility">波动率</a>
+            <a href="#execution">执行空间</a>
+        </div>
+
+        <div class="grid">
+            <article class="card full-width chart score-radar-card">
+                <div class="card-header">双创评分雷达图</div>
+                <p class="chart-note">五个模块各占 20 分。总分看机会强弱，雷达图看结构短板；当某一层明显塌陷时，仓位应该比结论更谨慎。</p>
+                <div class="card-body">
+                    <img src="docs/china_ai_options/figures/shuangchuang_score.png" alt="双创评分雷达图" onclick="openLightbox(this)">
+                </div>
+            </article>
+        </div>
+
+        <section class="report-section" id="narrative">
+            <div class="section-title">第一层：双创叙事强度</div>
+            <div class="section-explain">
+                <p class="logic"><strong>思考逻辑：</strong>如果中国也有 AI 叙事，它不应该只停留在个股故事里，至少要能在创业板和科创50这样的指数层面留下痕迹。</p>
+                <p class="watch"><strong>重点关注：</strong>重点看 2023 年以来六大宽基的相对走势，以及 DeepSeek R1 之后双创是否明显跑赢其它宽基。</p>
+                <p class="formula"><strong>评分公式：</strong>DeepSeek R1 至七月高点的双创平均涨幅、六大宽基均值、2023以来双创相对收益共同评分。双创越能持续跑出指数级别的超额，这一层分数越高。</p>
+            </div>
+            <div class="grid">
+                <article class="card full-width chart">
+                    <div class="card-header">六大宽基指数 2023 至今相对走势</div>
+                    <p class="chart-note">用同一起点观察六大宽基的相对强弱。<br><span class="read-chart">重点看双创是否只是一段短线脉冲，还是已经在 AI 叙事阶段形成了指数级别的领先。</span></p>
+                    <div class="card-body"><img src="docs/china_ai_options/figures/shuangchuang_indices_normalized_2023_now.png" alt="六大宽基指数 2023 至今相对走势" onclick="openLightbox(this)"></div>
+                </article>
+                <article class="card full-width chart">
+                    <div class="card-header">六大宽基指数阶段涨跌幅</div>
+                    <p class="chart-note">把行情拆成 DeepSeek R1 后的主升段、七月高点后的回撤段，以及 2023 至今的完整结果。<br><span class="read-chart">重点看双创是否先抢跑，又是否因为抢跑而承受更剧烈的回撤。</span></p>
+                    <div class="card-body"><img src="docs/china_ai_options/figures/option_market_overview_indices.png" alt="六大宽基指数阶段涨跌幅" onclick="openLightbox(this)"></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="report-section" id="structure">
+            <div class="section-title">第二层：价格结构位置</div>
+            <div class="section-explain">
+                <p class="logic"><strong>思考逻辑：</strong>长期叙事成立，不代表短期价格结构健康。越是弹性资产，越要把支撑、回撤和反弹目标拆开看。</p>
+                <p class="watch"><strong>重点关注：</strong>重点看 MA144 与 TDF 回撤阶梯。首次回踩、二次跌破、反弹不过前高，对仓位含义完全不同。</p>
+                <p class="formula"><strong>评分公式：</strong>根据当前收盘价相对主波段斐波那契回撤位置评分。23.6% 内得高分，跌破 78.6% 后明显扣分；两个指数取平均。</p>
+            </div>
+            <div class="grid">
+                <article class="card chart">
+                    <div class="card-header">创业板：MA144 与 TDF 回撤阶梯</div>
+                    <p class="chart-note">价格结构用来回答“现在是在健康回踩，还是已经开始破坏主波段”。<br><span class="read-chart">重点看当前价格所在回撤档位，以及反弹时能否重新站回上方阶梯。</span></p>
+                    <div class="card-body"><img src="docs/china_ai_options/figures/index_trend_399006.png" alt="创业板价格结构" onclick="openLightbox(this)"></div>
+                </article>
+                <article class="card chart">
+                    <div class="card-header">科创50：MA144 与 TDF 回撤阶梯</div>
+                    <p class="chart-note">科创50弹性更大，所以支撑失效时对期权持仓的杀伤也更明显。<br><span class="read-chart">重点看它是重新夺回前一档支撑，还是继续向波段起点回撤。</span></p>
+                    <div class="card-body"><img src="docs/china_ai_options/figures/index_trend_000688.png" alt="科创50价格结构" onclick="openLightbox(this)"></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="report-section" id="pcr">
+            <div class="section-title">第三层：期权情绪结构</div>
+            <div class="section-explain">
+                <p class="logic"><strong>思考逻辑：</strong>PCR 不只是看多看空，它更像期权市场有没有提前买保险。价格上涨时保护需求抬升，往往说明资金并没有完全失去警惕。</p>
+                <p class="watch"><strong>重点关注：</strong>重点看持仓量 PCR 与指数走势是否背离。PCR 过低说明保护不足，过高说明防御拥挤，适度保护反而更健康。</p>
+                <p class="formula"><strong>评分公式：</strong>成交量 PCR 与持仓量 PCR 共同评分。0.8 至 1.6 附近视为较均衡；极端偏低或偏高均扣分。</p>
+            </div>
+            <div class="grid">
+                <article class="card full-width chart">
+                    <div class="card-header">双创 ETF 期权 PCR 与指数走势</div>
+                    <p class="chart-note">主图看指数，副图看持仓量 PCR。<br><span class="read-chart">重点看上涨过程中是否提前买保护，以及回撤后保护需求是否继续极端化。</span></p>
+                    <div class="card-body"><img src="docs/china_ai_options/figures/option_pcr_history.png" alt="双创 ETF 期权 PCR 与指数走势" onclick="openLightbox(this)"></div>
+                </article>
+            </div>
+        </section>
+
+        <section class="report-section" id="volatility">
+            <div class="section-title">第四层：波动率定价</div>
+            <div class="section-explain">
+                <p class="logic"><strong>思考逻辑：</strong>期权买方最容易犯的错，是只看方向，不看波动率。方向看对，如果隐波买得太贵，也可能输给波动率回落和时间价值。</p>
+                <p class="watch"><strong>重点关注：</strong>重点看 QVIX、近远月 IV、波动率微笑和曲面。短端越红、虚值越贵，越不能把便宜权利金误认为低风险。</p>
+                <p class="formula"><strong>评分公式：</strong>QVIX/HV20、近远月 ATM IV、短端是否极端倒挂共同评分。隐波相对真实波动不离谱，且期限结构不过度挤压时加分。</p>
+            </div>
+            <div class="grid">
+                <article class="card full-width chart"><div class="card-header">双创 ETF 期权 QVIX 历史</div><p class="chart-note">QVIX 越高，代表市场给未来波动的定价越贵。<br><span class="read-chart">重点看隐波是否跟随行情同步抬升，以及暴跌后是继续恐慌，还是开始回落。</span></p><div class="card-body"><img src="docs/china_ai_options/figures/option_qvix_history.png" alt="双创 ETF 期权 QVIX 历史" onclick="openLightbox(this)"></div></article>
+                <article class="card full-width chart"><div class="card-header">科创50ETF 合约级隐含波动率</div><p class="chart-note">近月和次近月 IV 的变化，可以观察短端定价是否过热。<br><span class="read-chart">重点看近月 IV 是否远高于次近月；越接近到期，短期大波动越容易被放大定价。</span></p><div class="card-body"><img src="docs/china_ai_options/figures/option_588000_iv_history.png" alt="科创50ETF 合约级隐含波动率" onclick="openLightbox(this)"></div></article>
+                <article class="card chart"><div class="card-header">创业板ETF 波动率微笑</div><p class="chart-note">横向比较同一到期月份的不同行权价。<br><span class="read-chart">重点看远虚值合约是否已经因为极端预期被抬高 IV。</span></p><div class="card-body"><img src="docs/china_ai_options/figures/option_smile_159915.png" alt="创业板ETF 波动率微笑" onclick="openLightbox(this)"></div></article>
+                <article class="card chart"><div class="card-header">科创50ETF 波动率微笑</div><p class="chart-note">科创50弹性更大，微笑形态通常也更陡。<br><span class="read-chart">重点看认购、认沽两端是否同时变贵，这往往意味着市场正在为极端波动付费。</span></p><div class="card-body"><img src="docs/china_ai_options/figures/option_smile_588000.png" alt="科创50ETF 波动率微笑" onclick="openLightbox(this)"></div></article>
+                <article class="card chart"><div class="card-header">创业板ETF 认购波动率曲面</div><p class="chart-note">曲面把到期时间和行权价一起放进观察框架。<br><span class="read-chart">重点看短端、偏虚值区域是否明显更红，它代表“立刻继续大涨”的预期是否已经很贵。</span></p><div class="card-body"><img src="docs/china_ai_options/figures/option_surface_159915.png" alt="创业板ETF 认购波动率曲面" onclick="openLightbox(this)"></div></article>
+                <article class="card chart"><div class="card-header">科创50ETF 认购波动率曲面</div><p class="chart-note">科创50曲面整体更高，说明它的波动率定价更贵。<br><span class="read-chart">重点看远月是否仍有足够表达空间，避免短期期权同时赌方向、时间和隐波。</span></p><div class="card-body"><img src="docs/china_ai_options/figures/option_surface_588000.png" alt="科创50ETF 认购波动率曲面" onclick="openLightbox(this)"></div></article>
+            </div>
+        </section>
+
+        <section class="report-section" id="execution">
+            <div class="section-title">第五层：交易执行空间</div>
+            <div class="section-explain">
+                <p class="logic"><strong>思考逻辑：</strong>最后才讨论怎么买。因为期权不是彩票，它是把方向、时间、波动率和仓位管理绑在一起的结构化工具。</p>
+                <p class="watch"><strong>重点关注：</strong>重点比较短月、远月、平值、实值和价差。长期看好时，短期深虚值认购未必最高效；回撤很深时，也不能只因为便宜就急着加仓。</p>
+                <p class="formula"><strong>评分公式：</strong>近远月 ATM IV 差异、隐波相对 HV 是否合理、价格结构是否仍有支撑共同评分。远月表达空间越清楚、短端越不过热，这一层分数越高。</p>
+            </div>
+            <div class="grid">
+                <article class="card full-width chart">
+                    <div class="card-header">近月/远月 ATM 认购合约观察</div>
+                    <p class="chart-note">这里列出当前用于比较执行空间的 ATM 认购合约。<br><span class="read-chart">重点看同一标的近月和远月的 IV、流动性和持仓差异；长期看好时，远月合约通常比近月深虚值更适合表达方向。</span></p>
+                    <div class="card-body table-card-body">
+                        <table class="score-table">
+                            <thead><tr><th>标的</th><th>现价</th><th>期限</th><th>到期日</th><th>合约</th><th>行权价</th><th>中间价</th><th>IV</th><th>成交量</th><th>持仓量</th></tr></thead>
+                            <tbody id="execution-contract-table-body">
+                                <tr><td colspan="10">等待合约数据</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+                <article class="card full-width chart">
+                    <div class="card-header">执行原则</div>
+                    <div class="card-body execution-copy">
+                        <p>第一，只在牛市评分和双创评分同时支持时，提高双创期权的观察优先级。</p>
+                        <p>第二，价格结构没有修复前，总分再高也不能忽视仓位；雷达图里最短的那根轴，往往就是最容易出问题的地方。</p>
+                        <p>第三，隐波高、回撤深、波动大的时候，不追近月深虚值认购，优先比较更长到期、平值/实值认购、牛市价差和分批建仓。</p>
+                        <p>第四，单日评分不重要，连续变化才重要。真正有价值的是每天观察它是继续修复，还是继续推翻原来的叙事。</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="report-footer">
+            <h2>如何使用这个页面</h2>
+            <p>双创评分不是为了替代判断，而是为了防止自己只盯着某一张图。叙事再强，也要看价格结构；价格反弹，也要看期权定价；期权便宜，也要看它到底便宜在绝对价格，还是便宜在隐含波动率。</p>
+            <p>它和牛市评分是一前一后的关系：牛市评分先判断大级别机会，双创评分再判断这条机会是否适合用双创指数和 ETF 期权来表达。</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>数据来源：自动化统计系统 | 仅供参考，不构成投资建议</p>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Greedy Alpha Report</p>
+    </footer>
+</div>
+
+<div class="floating-qr">
+    <img src="docs/qrcode.webp" alt="公众号二维码">
+</div>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full Screen Image">
+</div>
+
+<script src="layout.min.js"></script>
+<script>
+    const now = new Date();
+    document.getElementById('update-time').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+    function parseCsvLine(line) {
+        const result = [];
+        let current = '';
+        let quoted = false;
+        for (let i = 0; i < line.length; i += 1) {
+            const char = line[i];
+            const next = line[i + 1];
+            if (char === '"' && quoted && next === '"') {
+                current += '"';
+                i += 1;
+            } else if (char === '"') {
+                quoted = !quoted;
+            } else if (char === ',' && !quoted) {
+                result.push(current);
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current);
+        return result;
+    }
+
+    function parseCsv(text) {
+        const lines = text.trim().split(/\r?\n/).filter(Boolean);
+        if (lines.length < 2) return [];
+        const header = parseCsvLine(lines[0]);
+        return lines.slice(1).map(line => {
+            const values = parseCsvLine(line);
+            return Object.fromEntries(header.map((key, index) => [key, values[index] || '']));
+        });
+    }
+
+    function scoreStatus(score) {
+        if (score >= 80) return '双创进攻状态较强';
+        if (score >= 65) return '双创机会仍值得跟踪';
+        if (score >= 50) return '双创线索正在修复';
+        return '双创交易结构偏弱';
+    }
+
+    function loadChinaAiScore() {
+        fetch('docs/china_ai_options/shuangchuang_score.csv?t=' + Date.now())
+            .then(response => response.ok ? response.text() : Promise.reject(response.status))
+            .then(text => {
+                const rows = parseCsv(text);
+                if (!rows.length) return;
+                const total = rows.reduce((sum, row) => sum + Number(row.score || 0), 0);
+                const date = rows[0].date || '';
+                document.getElementById('score-number').textContent = total.toFixed(1);
+                document.getElementById('score-status').textContent = `${scoreStatus(total)}（${date}）`;
+                document.getElementById('score-table-body').innerHTML = rows.map(row => (
+                    `<tr><td>${row.module}</td><td>${row.weight}</td><td>${Number(row.score || 0).toFixed(1)}</td><td>${row.evidence}</td></tr>`
+                )).join('');
+            })
+            .catch(() => {
+                document.getElementById('score-status').textContent = '评分数据暂不可用';
+            });
+    }
+
+    function formatNumber(value, digits = 2) {
+        const num = Number(value);
+        if (!Number.isFinite(num)) return '--';
+        return num.toFixed(digits);
+    }
+
+    function loadExecutionContracts() {
+        fetch('docs/china_ai_options/shuangchuang_execution_contracts.csv?t=' + Date.now())
+            .then(response => response.ok ? response.text() : Promise.reject(response.status))
+            .then(text => {
+                const rows = parseCsv(text);
+                const body = document.getElementById('execution-contract-table-body');
+                if (!rows.length) {
+                    body.innerHTML = '<tr><td colspan="10">暂无合约数据</td></tr>';
+                    return;
+                }
+                body.innerHTML = rows.map(row => (
+                    `<tr><td>${row.underlying}</td><td>${formatNumber(row.spot, 3)}</td><td>${row.tenor}</td><td>${row.expiry}</td><td>${row.contract}</td><td>${formatNumber(row.strike, 3)}</td><td>${formatNumber(row.mid, 4)}</td><td>${formatNumber(Number(row.implied_volatility || 0) * 100, 2)}%</td><td>${formatNumber(row.volume, 0)}</td><td>${formatNumber(row.open_interest, 0)}</td></tr>`
+                )).join('');
+            })
+            .catch(() => {
+                document.getElementById('execution-contract-table-body').innerHTML = '<tr><td colspan="10">合约数据暂不可用</td></tr>';
+            });
+    }
+
+    loadChinaAiScore();
+    loadExecutionContracts();
+
+    function openLightbox(imgElement) {
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = imgElement.src.split('?')[0] + '?t=' + new Date().getTime();
+        lightbox.style.display = 'flex';
+        setTimeout(() => lightbox.classList.add('active'), 10);
+    }
+
+    function closeLightbox() {
+        const lightbox = document.getElementById('lightbox');
+        lightbox.classList.remove('active');
+        setTimeout(() => {
+            lightbox.style.display = 'none';
+        }, 300);
+    }
+</script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "83857bd155524d76a3f1cea1fc16ddd3"}'></script>
+</body>
+</html>
