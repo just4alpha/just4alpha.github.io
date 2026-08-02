@@ -101,11 +101,6 @@ body {
     padding: 10px 16px 18px;
 }
 
-.score-radar-card {
-    max-width: 760px;
-    margin: 0 auto;
-}
-
 .score-radar-card .card-body img {
     width: min(100%, 520px);
     margin: 0 auto;
@@ -170,6 +165,7 @@ body {
     color: var(--header-color);
     background: #fafafa;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .chart-note {
