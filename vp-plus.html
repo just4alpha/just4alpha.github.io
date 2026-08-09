@@ -54,9 +54,9 @@
     <img src="docs/qrcode.png" alt="公众号二维码">
 </div>
 
-<script src="layout.min.js"></script>
+<script src="layout.min.js?v=20260810-sidebarfix"></script>
 <script type="module">
-    import { initializeController, setupUI, initChart, loadData, getLevelState, controller } from './vp.min.js';
+    import { initializeController, setupUI, initChart, loadData, getLevelState, controller } from './vp.min.js?v=20260810-vpsecure';
 
     function enterApp(state, code) {
         sessionStorage.setItem('auth_code', code);

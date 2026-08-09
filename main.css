@@ -256,6 +256,226 @@ body {
     box-shadow: var(--shadow);
 }
 
+/* Index DCA Tool */
+[hidden] {
+    display: none !important;
+}
+
+.tool-panel {
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin: 0 0 20px;
+    padding: 16px;
+}
+
+.tool-controls {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(160px, 1fr));
+    gap: 14px;
+}
+
+.control-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.control-field label {
+    color: #4d5963;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.control-field select,
+.control-field input {
+    width: 100%;
+    background: #fbfcfd;
+    border-color: #dbe3ec;
+}
+
+.tool-actions {
+    align-items: end;
+    display: flex;
+    gap: 10px;
+}
+
+.primary-action {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    font-weight: 700;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 14px;
+    margin: 20px 0;
+}
+
+.metric-tile {
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 14px;
+}
+
+.metric-label {
+    color: #6b7785;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.metric-value {
+    color: var(--header-color);
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 6px;
+}
+
+.result-summary {
+    background: #fff;
+    border: 1px solid #e8edf3;
+    border-left: 4px solid var(--header-color);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    color: #4d5963;
+    font-size: 0.98rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding: 14px 16px;
+}
+
+.chart-shell {
+    background: #f5f5f7;
+    border: 1px solid #e5e5ea;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 18px;
+}
+
+.chart-title-row {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.chart-title-row h2 {
+    color: #1d1d1f;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.chart-title-row p {
+    color: #6e6e73;
+    font-size: 0.88rem;
+    margin: 4px 0 0;
+}
+
+.chart-legend {
+    color: #6e6e73;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    justify-content: flex-end;
+}
+
+.legend-item {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+}
+
+.legend-swatch {
+    border-radius: 999px;
+    display: inline-block;
+    height: 8px;
+    width: 22px;
+}
+
+.legend-swatch.baseline-swatch {
+    background: #34c759;
+}
+
+.legend-swatch.cash-swatch {
+    background: #8e8e93;
+}
+
+.legend-swatch.lump-swatch {
+    background: #34c759;
+}
+
+.legend-swatch.strategy-swatch {
+    background: #ff453a;
+}
+
+.dca-canvas-wrap {
+    background: #fff;
+    border-radius: 6px;
+    height: 520px;
+    position: relative;
+}
+
+#dca-chart {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.tool-note {
+    color: #6b7785;
+    font-size: 0.9rem;
+    margin: 14px 0 0;
+}
+
+.tool-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+.table-card-body {
+    overflow-x: auto;
+}
+
+.tool-table th,
+.tool-table td {
+    border-bottom: 1px solid #edf1f5;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.tool-table th {
+    color: var(--header-color);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.draggable-qr {
+    cursor: grab;
+    top: 86px;
+    right: 18px;
+    touch-action: none;
+    user-select: none;
+}
+
+.draggable-qr.dragging {
+    cursor: grabbing;
+    opacity: 0.92;
+}
+
+.draggable-qr img {
+    pointer-events: none;
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -414,5 +634,23 @@ button.active {
     .score-stack,
     .score-overview {
         grid-template-columns: 1fr;
+    }
+
+    .tool-controls,
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-title-row {
+        display: block;
+    }
+
+    .chart-legend {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
+
+    .dca-canvas-wrap {
+        height: 420px;
     }
 }

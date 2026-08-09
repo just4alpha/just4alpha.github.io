@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指数定投工具</title>
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="main.css?v=20260809-index-dca-qr">
+</head>
+<body>
+
+<div id="sidebar-container"></div>
+
+<div class="main-content">
+    <header>
+        <div class="page-title-row">
+            <button class="menu-toggle" id="menu-toggle">☰</button>
+            <div class="page-title page-title-offset">指数定投工具</div>
+        </div>
+        <div class="update-time">数据区间: <span id="data-range">--</span></div>
+    </header>
+
+    <div class="container report-container">
+        <section class="hero-copy">
+            <p>每个月定投一千元，十年后会变成多少？这个工具把文章里的定投逻辑做成可交互页面，用同一套规则比较国内五大宽基、纳指100和标普500。</p>
+            <p>这里使用指数点位模拟，不涉及具体 ETF 代码、分红、折溢价、手续费和汇率。它适合观察趋势和规则差异，不构成投资建议。</p>
+        </section>
+
+        <div class="section-title">回测参数</div>
+        <section class="tool-panel">
+            <div class="tool-controls">
+                <div class="control-field">
+                    <label for="index-select">可选指数</label>
+                    <select id="index-select"></select>
+                </div>
+                <div class="control-field">
+                    <label for="start-date">开始日期</label>
+                    <input id="start-date" type="date">
+                </div>
+                <div class="control-field">
+                    <label for="end-date">结束日期</label>
+                    <input id="end-date" type="date">
+                </div>
+                <div class="control-field">
+                    <label for="amount-input">每月基础定投</label>
+                    <input id="amount-input" type="number" min="100" step="100" value="1000">
+                </div>
+                <div class="control-field">
+                    <label for="strategy-select">定投方式</label>
+                    <select id="strategy-select">
+                        <option value="normal" selected>普通定投</option>
+                        <option value="ladder">追加定投</option>
+                        <option value="takeProfit">止盈定投</option>
+                    </select>
+                </div>
+                <div class="control-field ladder-option">
+                    <label for="ladder-step">追加步长</label>
+                    <select id="ladder-step">
+                        <option value="0.05">每跌 5%</option>
+                        <option value="0.10" selected>每跌 10%</option>
+                        <option value="0.15">每跌 15%</option>
+                        <option value="0.20">每跌 20%</option>
+                    </select>
+                </div>
+                <div class="control-field ladder-option">
+                    <label for="ladder-multiple">追加系数</label>
+                    <input id="ladder-multiple" type="number" min="0" step="0.25" value="1">
+                </div>
+                <div class="control-field take-profit-option">
+                    <label for="take-profit-window">高低点窗口 N</label>
+                    <input id="take-profit-window" type="number" min="20" step="1" value="244">
+                </div>
+                <div class="control-field take-profit-option">
+                    <label for="take-profit-threshold">高位阈值 M</label>
+                    <select id="take-profit-threshold">
+                        <option value="0.60">60%</option>
+                        <option value="0.70">70%</option>
+                        <option value="0.80" selected>80%</option>
+                        <option value="0.90">90%</option>
+                    </select>
+                </div>
+                <div class="control-field take-profit-option">
+                    <label for="take-profit-ratio">单次卖出 P</label>
+                    <select id="take-profit-ratio">
+                        <option value="0.03">3%</option>
+                        <option value="0.05" selected>5%</option>
+                        <option value="0.07">7%</option>
+                        <option value="0.10">10%</option>
+                    </select>
+                </div>
+                <div class="tool-actions">
+                    <button class="primary-action" id="run-button">开始回测</button>
+                </div>
+            </div>
+            <p class="tool-note" id="universe-note">选择指数后，页面会自动设置该指数可用的起止时间。</p>
+            <p class="tool-note" id="strategy-note">普通定投：每月第一个交易日投入固定金额，不做择时和止盈。</p>
+        </section>
+
+        <div class="summary-grid dca-result" hidden>
+            <div class="metric-tile">
+                <div class="metric-label">总投入</div>
+                <div class="metric-value" id="metric-contribution">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">总市值</div>
+                <div class="metric-value" id="metric-final">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">总收益</div>
+                <div class="metric-value" id="metric-profit">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">收益率</div>
+                <div class="metric-value" id="metric-roi">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">最大回撤</div>
+                <div class="metric-value" id="metric-drawdown">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">近似年化</div>
+                <div class="metric-value" id="metric-annualized">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">近似夏普</div>
+                <div class="metric-value" id="metric-sharpe">--</div>
+            </div>
+            <div class="metric-tile">
+                <div class="metric-label">投入次数</div>
+                <div class="metric-value" id="metric-invest-count">--</div>
+            </div>
+        </div>
+
+        <section class="result-summary dca-result" id="result-summary" hidden>选择参数后生成回测摘要。</section>
+
+        <section class="chart-shell dca-result" hidden>
+            <div class="chart-title-row">
+                <div>
+                    <h2>定投收益曲线</h2>
+                    <p id="chart-subtitle">普通定投与当前规则对比</p>
+                </div>
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="legend-swatch baseline-swatch"></span>普通定投</span>
+                    <span class="legend-item"><span class="legend-swatch strategy-swatch"></span>当前规则</span>
+                </div>
+            </div>
+            <div class="dca-canvas-wrap">
+                <canvas id="dca-chart"></canvas>
+            </div>
+        </section>
+
+        <div class="section-title dca-result" hidden>结果明细</div>
+        <section class="tool-panel table-card-body dca-result" hidden>
+            <table class="tool-table">
+                <thead>
+                    <tr>
+                        <th>规则</th>
+                        <th>总投入</th>
+                        <th>总市值</th>
+                        <th>总收益</th>
+                        <th>收益率</th>
+                        <th>最大回撤</th>
+                        <th>近似年化</th>
+                        <th>近似夏普</th>
+                        <th>投入次数</th>
+                    </tr>
+                </thead>
+                <tbody id="compare-body"></tbody>
+            </table>
+            <p class="tool-note">追加定投按账户收益率回撤分层追加；止盈定投在追加定投基础上，当价格达到 N 日高低点区间的 M% 位置时卖出 P% 持仓，卖出所得现金优先覆盖后续定投。</p>
+        </section>
+
+        <section class="report-footer">
+            <h2>如何理解这张曲线</h2>
+            <p>普通定投回答的是“指数本身有没有长期趋势”。追加定投回答的是“下跌时多买一点，能不能吃到修复弹性”。止盈定投回答的是“高位兑现一部分，再用现金继续定投，能不能降低回撤”。</p>
+            <p>如果增强规则只是少投入、少波动，却没有改善最终收益率，就不应该把它理解成真正的 alpha。真正值得继续研究的，是在相同指数上同时改善收益、回撤和资金体验的规则。</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>数据来源：指数历史数据回测 | 仅供参考，不构成投资建议</p>
+        <p>&copy; <script>document.write(new Date().getFullYear())</script> Greedy Alpha Report</p>
+    </footer>
+</div>
+
+<div class="floating-qr draggable-qr" title="按住可拖动，双击回到右上角">
+    <img src="docs/qrcode.webp" alt="公众号二维码">
+</div>
+
+<script src="layout.min.js?v=20260810-index-dca-menu"></script>
+<script type="module" src="index-dca.js?v=20260809-wasm"></script>
+</body>
+</html>
