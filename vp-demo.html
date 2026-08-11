@@ -43,15 +43,13 @@
     <img src="docs/qrcode.png" alt="公众号二维码">
 </div>
 
-<script src="layout.min.js?v=20260810-sidebarfix"></script>
+<script src="layout.js"></script>
 <script type="module">
-    import { initializeController, setupUI, initChart, loadData, controller } from './vp.min.js?v=20260810-vpsecure';
+    import { initializeController, setupUI, initChart, loadData, controller } from './vp.min.js';
 
     async function main() {
         await initializeController();
-        sessionStorage.setItem('auth_code', 'GUEST');
         let user_state = controller.verify_code("GUEST");
-        if (!user_state) return;
         setupUI(user_state);
         runApp();
     }
